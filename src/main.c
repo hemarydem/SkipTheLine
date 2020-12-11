@@ -43,42 +43,135 @@ int main(int argc, char ** argv) {
   SDL_Rect editor;
   SDL_Rect quit;
 
+  SDL_Rect jvjNo;
+  SDL_Rect onlineNo;
+  SDL_Rect optionNo;
+  SDL_Rect editorNo;
+  SDL_Rect quitNo;
+
+  SDL_Texture * pikaTex;
+  SDL_Texture*arenaTex;
+  SDL_Texture*marioTex;
+  SDL_Rect pikachu;
+  SDL_Rect mario;
+
   if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) != 0){
       printf("error initialisation");
       return EXIT_FAILURE;
   }
   win  = SDL_CreateWindow("Skip the Line",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WINDOW_WIDTH, WINDOW_HEIGHT,0);
-  freeAndQuitIfNull(win == NULL,"creation window" ,win, renderer,pikaTex);
+  freeAndQuitIfNull(win == NULL,"creation window" ,win, renderer,backgroundTexture);
   renderer = SDL_CreateRenderer(win, -1,SDL_RENDERER_ACCELERATED);
-  freeAndQuitIfNull(renderer == NULL,"creation renderer" ,win, renderer,pikaTex);
+  freeAndQuitIfNull(renderer == NULL,"creation renderer" ,win, renderer,backgroundTexture);
 
   backgroundTexture = buildTextur("img/menuImg/bckgrndMenu.jpg", renderer, backgroundTexture);
   freeAndQuitIfNull(backgroundTexture == NULL,"error creation texture" ,win, renderer,backgroundTexture);
-  MenuImgTexture = buildTextur("img/menuImg/selected/menu.png", renderer, MenuImgTexture);
-  freeAndQuitIfNull(MenuImgTexture == NULL,"error creation texture" ,win, renderer,MenuImgTexture);
-
+  menuImgTexture = buildTextur("img/menuImg/selected/menu.png", renderer, menuImgTexture);
+  freeAndQuitIfNull(menuImgTexture == NULL,"error creation texture" ,win, renderer,menuImgTexture);
+                    
   jvjSelectTexture = buildTextur("img/menuImg/selected/jvj.png", renderer, jvjSelectTexture);
+  freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture jvj" ,win, renderer,jvjSelectTexture);
+  onlineSelectTexture = buildTextur("img/menuImg/selected/online.png", renderer, onlineSelectTexture);
+  freeAndQuitIfNull(onlineSelectTexture == NULL,"error creation texture online" ,win, renderer,onlineSelectTexture);
+  optionSelectTexture = buildTextur("img/menuImg/selected/option.png", renderer, optionSelectTexture);
+  freeAndQuitIfNull(optionSelectTexture == NULL,"error creation texture option" ,win, renderer,optionSelectTexture);
+  editorSelectTexture = buildTextur("img/menuImg/selected/editor.png", renderer, editorSelectTexture);
+  freeAndQuitIfNull(editorSelectTexture == NULL,"error creation texture editor" ,win, renderer,editorSelectTexture);
+  quitSelectTexture = buildTextur("img/menuImg/selected/quite.png", renderer, quitSelectTexture);
+  freeAndQuitIfNull(quitSelectTexture == NULL,"error creation texture quit" ,win, renderer,quitSelectTexture);
+
+  jvjNoSelectTexture = buildTextur("img/menuImg/unselected/jvj.png", renderer, jvjSelectTexture);
   freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture" ,win, renderer,jvjSelectTexture);
-  onlineSelectTexture = buildTextur("img/menuImg/selected/online.png", renderer, arenaTex);
+  onlineNoSelectTexture = buildTextur("img/menuImg/unselected/online.png", renderer, onlineNoSelectTexture);
   freeAndQuitIfNull(onlineSelectTexture == NULL,"error creation texture" ,win, renderer,onlineSelectTexture);
-  optionSelectTexture = buildTextur("img/menuImg/selected/option.png", renderer, marioTex);
+  optionNoSelectTexture = buildTextur("img/menuImg/unselected/option.png", renderer, optionNoSelectTexture);
   freeAndQuitIfNull(optionSelectTexture == NULL,"error creation texture" ,win, renderer,optionSelectTexture);
-  editorSelectTexture = buildTextur("img/menuImg/selected/editor.png", renderer, pikaTex);
+  editorNoSelectTexture = buildTextur("img/menuImg/unselected/editor.png", renderer, editorNoSelectTexture);
   freeAndQuitIfNull(editorSelectTexture == NULL,"error creation texture" ,win, renderer,editorSelectTexture);
-  quitSelectTexture = buildTextur("img/menuImg/selected/quite.png", renderer, arenaTex);
+  quitNoSelectTexture = buildTextur("img/menuImg/unselected/quite.png", renderer, quitNoSelectTexture);
   freeAndQuitIfNull(quitSelectTexture == NULL,"error creation texture" ,win, renderer,quitSelectTexture);
 
-  jvjSelectTexture = buildTextur("img/menuImg/unselected/jvj.png", renderer, jvjSelectTexture);
-  freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture" ,win, renderer,jvjSelectTexture);
-  onlineSelectTexture = buildTextur("img/menuImg/unselected/online.png", renderer, arenaTex);
-  freeAndQuitIfNull(onlineSelectTexture == NULL,"error creation texture" ,win, renderer,onlineSelectTexture);
-  optionSelectTexture = buildTextur("img/menuImg/unselected/option.png", renderer, marioTex);
-  freeAndQuitIfNull(optionSelectTexture == NULL,"error creation texture" ,win, renderer,optionSelectTexture);
-  editorSelectTexture = buildTextur("img/menuImg/unselected/editor.png", renderer, pikaTex);
-  freeAndQuitIfNull(editorSelectTexture == NULL,"error creation texture" ,win, renderer,editorSelectTexture);
-  quitSelectTexture = buildTextur("img/menuImg/unselected/quite.png", renderer, arenaTex);
-  freeAndQuitIfNull(quitSelectTexture == NULL,"error creation texture" ,win, renderer,quitSelectTexture);
+  SDL_QueryTexture(menuImgTexture,NULL,NULL, &menu.w, &menu.h);
 
+
+  SDL_QueryTexture(jvjNoSelectTexture,NULL,NULL, &jvjNo.w, &jvjNo.h);
+  SDL_QueryTexture(onlineNoSelectTexture,NULL,NULL, &onlineNo.w, &onlineNo.h);
+  SDL_QueryTexture(optionNoSelectTexture,NULL,NULL, &optionNo.w, &optionNo.h);
+  SDL_QueryTexture(editorNoSelectTexture,NULL,NULL, &editorNo.w, &editorNo.h);
+  SDL_QueryTexture(quitNoSelectTexture,NULL,NULL, &quitNo.w, &quitNo.h);
+
+  SDL_QueryTexture(jvjSelectTexture,NULL,NULL, &jvj.w, &jvj.h);
+  SDL_QueryTexture(onlineSelectTexture,NULL,NULL, &online.w, &online.h);
+  SDL_QueryTexture(optionSelectTexture,NULL,NULL, &option.w, &option.h);
+  SDL_QueryTexture(editorSelectTexture,NULL,NULL, &editor.w, &editor.h);
+  SDL_QueryTexture(quitSelectTexture,NULL,NULL, &quit.w, &quit.h);
+  int centered = (WINDOW_HEIGHT - menu.h) / 2;
+  int gapBetweenLabel = 65;
+  int y_label = 10;
+  menu.x = centered;
+  menu.y = y_label;
+  menu.h /= 3;
+  menu.w /= 3;
+  y_label += gapBetweenLabel;
+
+  jvjNo.x = centered;
+  jvjNo.y = y_label;
+  jvjNo.h /= 3;
+  jvjNo.w /= 3;
+  
+
+  jvj.x = centered;
+  jvj.y = y_label;
+  jvj.h /= 3;
+  jvj.w /= 3;
+  y_label += gapBetweenLabel;
+ 
+
+  onlineNo.x = centered;
+  onlineNo.y = y_label;
+  onlineNo.h /= 3;
+  onlineNo.w /= 3;
+  
+
+  online.x = centered;
+  online.y = y_label;
+  online.h /= 3;
+  online.w /= 3;
+  y_label += gapBetweenLabel;
+
+  optionNo.x = centered;
+  optionNo.y = y_label;
+  optionNo.h /= 3;
+  optionNo.w /= 3;
+  
+
+  option.x = centered;
+  option.y = y_label;
+  option.h /= 3;
+  option.w /= 3;
+  y_label += gapBetweenLabel;
+
+  editorNo.x = centered;
+  editorNo.y = y_label;
+  editorNo.h /= 3;
+  editorNo.w /= 3;
+
+  editor.x = centered;
+  editor.y = y_label;
+  editor.h /= 3;
+  editor.w /= 3;
+  y_label += gapBetweenLabel;
+
+  quit.x = centered;
+  quit.y = y_label;
+  quit.h /= 3;
+  quit.w /= 3;
+
+  quitNo.x = centered;
+  quitNo.y = y_label;
+  quitNo.h /= 3;
+  quitNo.w /= 3;
+  
   while (!close) {
       SDL_Event event;
       while (SDL_PollEvent(&event) == 1) {
@@ -89,22 +182,51 @@ int main(int argc, char ** argv) {
               case SDL_KEYDOWN:
                   switch (event.key.keysym.sym) {
                       case SDLK_DOWN:
-                          y_pos += SPEED/30;
+                          --cursor;
                           printf("bas\n");
                           break;
                       case SDLK_UP:
-                          y_pos -= SPEED/30;
+                          ++cursor;
                           printf("haut\n");
                           break;
                   }
               break;
           }
       }
+      if (cursor == 6) cursor = 1;
+      if (cursor == 0) cursor = 5;
 
       SDL_RenderClear(renderer);
-      SDL_RenderCopy(renderer, arenaTex, NULL, NULL);
-      SDL_RenderCopy(renderer, pikaTex, NULL, &pikachu);
-      SDL_RenderCopy(renderer, marioTex, NULL, &mario);
+      SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+      SDL_RenderCopy(renderer, menuImgTexture, NULL, &menu);
+      if (cursor == 1) {
+        SDL_RenderCopy(renderer, jvjSelectTexture, NULL, &jvj);
+      } else {
+        SDL_RenderCopy(renderer, jvjNoSelectTexture, NULL, &jvjNo);
+      }
+      if (cursor == 2) {
+        SDL_RenderCopy(renderer, onlineSelectTexture, NULL, &online);
+      } else {
+        SDL_RenderCopy(renderer, onlineNoSelectTexture, NULL, &onlineNo);
+      }
+      if (cursor == 3) {
+        SDL_RenderCopy(renderer, optionSelectTexture, NULL, &option);
+      } else {
+        SDL_RenderCopy(renderer, optionNoSelectTexture, NULL, &optionNo);
+      }
+
+      if (cursor == 4) {
+        SDL_RenderCopy(renderer, editorSelectTexture, NULL, &editor);
+      } else {
+        SDL_RenderCopy(renderer, editorNoSelectTexture, NULL, &editorNo);
+      }
+
+      if (cursor == 5) {
+        SDL_RenderCopy(renderer, quitSelectTexture, NULL, &quit);
+      } else {
+         SDL_RenderCopy(renderer, quitNoSelectTexture, NULL, &quitNo);
+      }
+
       SDL_RenderPresent(renderer);
       SDL_Delay(1000/60);
   }
@@ -112,11 +234,7 @@ int main(int argc, char ** argv) {
 
 switch (cursor) {
   case 1:
-    SDL_Texture * pikaTex;
-    SDL_Texture*arenaTex;
-    SDL_Texture*marioTex;
-    SDL_Rect pikachu;
-    SDL_Rect mario;
+
 
     pikaTex = buildTextur("img/pika.bmp", renderer, pikaTex);
     freeAndQuitIfNull(pikaTex == NULL,"error creation texture" ,win, renderer,pikaTex);
@@ -230,7 +348,7 @@ switch (cursor) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
     SDL_Quit();
-  break
+  break;
 }
 
 SDL_DestroyTexture(menuImgTexture);
