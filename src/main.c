@@ -20,12 +20,13 @@ int main(int argc, char ** argv) {
   SDL_Renderer * renderer = NULL;
   int close = 0;
   int cursor = 1;
+  bool selecting = false;
 
   SDL_Texture * menuImgTexture;
   SDL_Texture * backgroundTexture;
 
   SDL_Texture * jvjSelectTexture;
-  SDL_Texture* onlineSelectTexture;
+  SDL_Texture * onlineSelectTexture;
   SDL_Texture * optionSelectTexture;
   SDL_Texture * editorSelectTexture;
   SDL_Texture * quitSelectTexture;
@@ -68,7 +69,7 @@ int main(int argc, char ** argv) {
   freeAndQuitIfNull(backgroundTexture == NULL,"error creation texture" ,win, renderer,backgroundTexture);
   menuImgTexture = buildTextur("img/menuImg/selected/menu.png", renderer, menuImgTexture);
   freeAndQuitIfNull(menuImgTexture == NULL,"error creation texture" ,win, renderer,menuImgTexture);
-                    
+
   jvjSelectTexture = buildTextur("img/menuImg/selected/jvj.png", renderer, jvjSelectTexture);
   freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture jvj" ,win, renderer,jvjSelectTexture);
   onlineSelectTexture = buildTextur("img/menuImg/selected/online.png", renderer, onlineSelectTexture);
@@ -105,73 +106,30 @@ int main(int argc, char ** argv) {
   SDL_QueryTexture(optionSelectTexture,NULL,NULL, &option.w, &option.h);
   SDL_QueryTexture(editorSelectTexture,NULL,NULL, &editor.w, &editor.h);
   SDL_QueryTexture(quitSelectTexture,NULL,NULL, &quit.w, &quit.h);
+
+
   int centered = (WINDOW_HEIGHT - menu.h) / 2;
   int gapBetweenLabel = 65;
   int y_label = 10;
-  menu.x = centered;
-  menu.y = y_label;
-  menu.h /= 3;
-  menu.w /= 3;
+  int ladderDimenssion = 3;
+
+  initPositionAndSize(&menu ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
-
-  jvjNo.x = centered;
-  jvjNo.y = y_label;
-  jvjNo.h /= 3;
-  jvjNo.w /= 3;
-  
-
-  jvj.x = centered;
-  jvj.y = y_label;
-  jvj.h /= 3;
-  jvj.w /= 3;
+  initPositionAndSize(&jvjNo ,&ladderDimenssion,&y_label,&centered);
+  initPositionAndSize(&jvj ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
- 
-
-  onlineNo.x = centered;
-  onlineNo.y = y_label;
-  onlineNo.h /= 3;
-  onlineNo.w /= 3;
-  
-
-  online.x = centered;
-  online.y = y_label;
-  online.h /= 3;
-  online.w /= 3;
+  initPositionAndSize(&onlineNo ,&ladderDimenssion,&y_label,&centered);
+  initPositionAndSize(&online ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
-
-  optionNo.x = centered;
-  optionNo.y = y_label;
-  optionNo.h /= 3;
-  optionNo.w /= 3;
-  
-
-  option.x = centered;
-  option.y = y_label;
-  option.h /= 3;
-  option.w /= 3;
+  initPositionAndSize(&optionNo ,&ladderDimenssion,&y_label,&centered);
+  initPositionAndSize(&option ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
-
-  editorNo.x = centered;
-  editorNo.y = y_label;
-  editorNo.h /= 3;
-  editorNo.w /= 3;
-
-  editor.x = centered;
-  editor.y = y_label;
-  editor.h /= 3;
-  editor.w /= 3;
+  initPositionAndSize(&editorNo ,&ladderDimenssion,&y_label,&centered);
+  initPositionAndSize(&editor ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
+  initPositionAndSize(&quit ,&ladderDimenssion,&y_label,&centered);
+  initPositionAndSize(&quitNo ,&ladderDimenssion,&y_label,&centered);
 
-  quit.x = centered;
-  quit.y = y_label;
-  quit.h /= 3;
-  quit.w /= 3;
-
-  quitNo.x = centered;
-  quitNo.y = y_label;
-  quitNo.h /= 3;
-  quitNo.w /= 3;
-  
   while (!close) {
       SDL_Event event;
       while (SDL_PollEvent(&event) == 1) {
@@ -181,12 +139,16 @@ int main(int argc, char ** argv) {
           switch (event.type) {
               case SDL_KEYDOWN:
                   switch (event.key.keysym.sym) {
+                      case SDLK_RETURN:
+                        printf("entrer\n");
+                        selecting = true;
+                        break;
                       case SDLK_DOWN:
-                          --cursor;
+                          ++cursor;
                           printf("bas\n");
                           break;
                       case SDLK_UP:
-                          ++cursor;
+                          --cursor;
                           printf("haut\n");
                           break;
                   }
@@ -201,6 +163,7 @@ int main(int argc, char ** argv) {
       SDL_RenderCopy(renderer, menuImgTexture, NULL, &menu);
       if (cursor == 1) {
         SDL_RenderCopy(renderer, jvjSelectTexture, NULL, &jvj);
+        if(selecting)printf("début du jeu\n");
       } else {
         SDL_RenderCopy(renderer, jvjNoSelectTexture, NULL, &jvjNo);
       }
@@ -230,12 +193,7 @@ int main(int argc, char ** argv) {
       SDL_RenderPresent(renderer);
       SDL_Delay(1000/60);
   }
-
-
-switch (cursor) {
-  case 1:
-
-
+/*
     pikaTex = buildTextur("img/pika.bmp", renderer, pikaTex);
     freeAndQuitIfNull(pikaTex == NULL,"error creation texture" ,win, renderer,pikaTex);
     arenaTex = buildTextur("img/bckgrndMenu.jpg", renderer, arenaTex);
@@ -347,9 +305,8 @@ switch (cursor) {
     SDL_DestroyTexture(arenaTex);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
-    SDL_Quit();
-  break;
-}
+    SDL_Quit();*/
+
 
 SDL_DestroyTexture(menuImgTexture);
 SDL_DestroyTexture(backgroundTexture);

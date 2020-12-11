@@ -69,3 +69,11 @@ char * buildStr(int size){
     printf("\nerror string not build\n");
     return(string);
 }
+
+SDL_Rect initPositionAndSize(SDL_Rect * rectContaineur, int * ladder, int * y, int * x) {
+    (*rectContaineur).x = *x;
+    (*rectContaineur).y = *y;
+    (*rectContaineur).h /= *ladder;
+    (*rectContaineur).w /= *ladder;
+    return *rectContaineur;
+}
