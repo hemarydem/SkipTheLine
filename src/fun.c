@@ -9,6 +9,7 @@
 
 SDL_Texture * buildTextur(const char * imgPath, SDL_Renderer * renderer, SDL_Texture *texture){
     SDL_Surface * surface;
+    printf("%s\n", imgPath);
      surface = IMG_Load(imgPath);
     if(!surface){
         printf("\nERROR BUILD SURFACE");
@@ -42,6 +43,7 @@ int freeAndQuitIfNull(int compare,const char * strErroMsg,SDL_Window * win, SDL_
     }
     return 0;
 }
+
 void dontCrosseBorder(float * velocity, float * position){
     if(*position <= 0) {
         *position = 0;

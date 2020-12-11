@@ -10,6 +10,7 @@
 #include<SDL_image.h>
 #include<SDL_ttf.h>
 #include "fun.h"
+#include "menufun.h"
 #define WINDOW_WIDTH (620)
 #define WINDOW_HEIGHT (440)
 #define SPEED (300)
@@ -20,39 +21,24 @@ int main(int argc, char ** argv) {
   SDL_Renderer * renderer = NULL;
   int close = 0;
   int cursor = 1;
-  bool selecting = false;
 
+  bool selecting = false;
+  bool menuIsOn = true;
+  bool gameIsOn = false;
+  //menu
   SDL_Texture * menuImgTexture;
   SDL_Texture * backgroundTexture;
-
-  SDL_Texture * jvjSelectTexture;
-  SDL_Texture * onlineSelectTexture;
-  SDL_Texture * optionSelectTexture;
-  SDL_Texture * editorSelectTexture;
-  SDL_Texture * quitSelectTexture;
-
-  SDL_Texture * jvjNoSelectTexture;
-  SDL_Texture * onlineNoSelectTexture;
-  SDL_Texture * optionNoSelectTexture;
-  SDL_Texture * editorNoSelectTexture;
-  SDL_Texture * quitNoSelectTexture;
-
-  SDL_Rect menu;
-  SDL_Rect jvj;
-  SDL_Rect online;
-  SDL_Rect option;
-  SDL_Rect editor;
-  SDL_Rect quit;
-
-  SDL_Rect jvjNo;
-  SDL_Rect onlineNo;
-  SDL_Rect optionNo;
-  SDL_Rect editorNo;
-  SDL_Rect quitNo;
-
+  SDL_Texture *** menuTextureArray;
+  menuTextureArray = initMenuArray();
+  //jvj
   SDL_Texture * pikaTex;
   SDL_Texture*arenaTex;
   SDL_Texture*marioTex;
+
+  SDL_Rect ** menuRectArray = initMenuRectArray();
+  SDL_Rect menu;
+
+  //jvj rect
   SDL_Rect pikachu;
   SDL_Rect mario;
 
@@ -64,72 +50,20 @@ int main(int argc, char ** argv) {
   freeAndQuitIfNull(win == NULL,"creation window" ,win, renderer,backgroundTexture);
   renderer = SDL_CreateRenderer(win, -1,SDL_RENDERER_ACCELERATED);
   freeAndQuitIfNull(renderer == NULL,"creation renderer" ,win, renderer,backgroundTexture);
-
   backgroundTexture = buildTextur("img/menuImg/bckgrndMenu.jpg", renderer, backgroundTexture);
   freeAndQuitIfNull(backgroundTexture == NULL,"error creation texture" ,win, renderer,backgroundTexture);
   menuImgTexture = buildTextur("img/menuImg/selected/menu.png", renderer, menuImgTexture);
   freeAndQuitIfNull(menuImgTexture == NULL,"error creation texture" ,win, renderer,menuImgTexture);
 
-  jvjSelectTexture = buildTextur("img/menuImg/selected/jvj.png", renderer, jvjSelectTexture);
-  freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture jvj" ,win, renderer,jvjSelectTexture);
-  onlineSelectTexture = buildTextur("img/menuImg/selected/online.png", renderer, onlineSelectTexture);
-  freeAndQuitIfNull(onlineSelectTexture == NULL,"error creation texture online" ,win, renderer,onlineSelectTexture);
-  optionSelectTexture = buildTextur("img/menuImg/selected/option.png", renderer, optionSelectTexture);
-  freeAndQuitIfNull(optionSelectTexture == NULL,"error creation texture option" ,win, renderer,optionSelectTexture);
-  editorSelectTexture = buildTextur("img/menuImg/selected/editor.png", renderer, editorSelectTexture);
-  freeAndQuitIfNull(editorSelectTexture == NULL,"error creation texture editor" ,win, renderer,editorSelectTexture);
-  quitSelectTexture = buildTextur("img/menuImg/selected/quite.png", renderer, quitSelectTexture);
-  freeAndQuitIfNull(quitSelectTexture == NULL,"error creation texture quit" ,win, renderer,quitSelectTexture);
-
-  jvjNoSelectTexture = buildTextur("img/menuImg/unselected/jvj.png", renderer, jvjSelectTexture);
-  freeAndQuitIfNull(jvjSelectTexture == NULL,"error creation texture" ,win, renderer,jvjSelectTexture);
-  onlineNoSelectTexture = buildTextur("img/menuImg/unselected/online.png", renderer, onlineNoSelectTexture);
-  freeAndQuitIfNull(onlineSelectTexture == NULL,"error creation texture" ,win, renderer,onlineSelectTexture);
-  optionNoSelectTexture = buildTextur("img/menuImg/unselected/option.png", renderer, optionNoSelectTexture);
-  freeAndQuitIfNull(optionSelectTexture == NULL,"error creation texture" ,win, renderer,optionSelectTexture);
-  editorNoSelectTexture = buildTextur("img/menuImg/unselected/editor.png", renderer, editorNoSelectTexture);
-  freeAndQuitIfNull(editorSelectTexture == NULL,"error creation texture" ,win, renderer,editorSelectTexture);
-  quitNoSelectTexture = buildTextur("img/menuImg/unselected/quite.png", renderer, quitNoSelectTexture);
-  freeAndQuitIfNull(quitSelectTexture == NULL,"error creation texture" ,win, renderer,quitSelectTexture);
-
+  menuTextureArray = getTextureMenuArray(menuTextureArray,renderer);
   SDL_QueryTexture(menuImgTexture,NULL,NULL, &menu.w, &menu.h);
-
-
-  SDL_QueryTexture(jvjNoSelectTexture,NULL,NULL, &jvjNo.w, &jvjNo.h);
-  SDL_QueryTexture(onlineNoSelectTexture,NULL,NULL, &onlineNo.w, &onlineNo.h);
-  SDL_QueryTexture(optionNoSelectTexture,NULL,NULL, &optionNo.w, &optionNo.h);
-  SDL_QueryTexture(editorNoSelectTexture,NULL,NULL, &editorNo.w, &editorNo.h);
-  SDL_QueryTexture(quitNoSelectTexture,NULL,NULL, &quitNo.w, &quitNo.h);
-
-  SDL_QueryTexture(jvjSelectTexture,NULL,NULL, &jvj.w, &jvj.h);
-  SDL_QueryTexture(onlineSelectTexture,NULL,NULL, &online.w, &online.h);
-  SDL_QueryTexture(optionSelectTexture,NULL,NULL, &option.w, &option.h);
-  SDL_QueryTexture(editorSelectTexture,NULL,NULL, &editor.w, &editor.h);
-  SDL_QueryTexture(quitSelectTexture,NULL,NULL, &quit.w, &quit.h);
-
-
   int centered = (WINDOW_HEIGHT - menu.h) / 2;
   int gapBetweenLabel = 65;
   int y_label = 10;
   int ladderDimenssion = 3;
-
   initPositionAndSize(&menu ,&ladderDimenssion,&y_label,&centered);
   y_label += gapBetweenLabel;
-  initPositionAndSize(&jvjNo ,&ladderDimenssion,&y_label,&centered);
-  initPositionAndSize(&jvj ,&ladderDimenssion,&y_label,&centered);
-  y_label += gapBetweenLabel;
-  initPositionAndSize(&onlineNo ,&ladderDimenssion,&y_label,&centered);
-  initPositionAndSize(&online ,&ladderDimenssion,&y_label,&centered);
-  y_label += gapBetweenLabel;
-  initPositionAndSize(&optionNo ,&ladderDimenssion,&y_label,&centered);
-  initPositionAndSize(&option ,&ladderDimenssion,&y_label,&centered);
-  y_label += gapBetweenLabel;
-  initPositionAndSize(&editorNo ,&ladderDimenssion,&y_label,&centered);
-  initPositionAndSize(&editor ,&ladderDimenssion,&y_label,&centered);
-  y_label += gapBetweenLabel;
-  initPositionAndSize(&quit ,&ladderDimenssion,&y_label,&centered);
-  initPositionAndSize(&quitNo ,&ladderDimenssion,&y_label,&centered);
-
+  menuJoinTextureAndRect(menuTextureArray, menuRectArray,&centered,&y_label,&gapBetweenLabel,&ladderDimenssion);
   while (!close) {
       SDL_Event event;
       while (SDL_PollEvent(&event) == 1) {
@@ -141,7 +75,7 @@ int main(int argc, char ** argv) {
                   switch (event.key.keysym.sym) {
                       case SDLK_RETURN:
                         printf("entrer\n");
-                        selecting = true;
+                        menuIsOn= false;
                         break;
                       case SDLK_DOWN:
                           ++cursor;
@@ -157,39 +91,12 @@ int main(int argc, char ** argv) {
       }
       if (cursor == 6) cursor = 1;
       if (cursor == 0) cursor = 5;
-
       SDL_RenderClear(renderer);
-      SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
-      SDL_RenderCopy(renderer, menuImgTexture, NULL, &menu);
-      if (cursor == 1) {
-        SDL_RenderCopy(renderer, jvjSelectTexture, NULL, &jvj);
-        if(selecting)printf("début du jeu\n");
-      } else {
-        SDL_RenderCopy(renderer, jvjNoSelectTexture, NULL, &jvjNo);
+      if(menuIsOn) {
+        SDL_RenderCopy(renderer, backgroundTexture, NULL, NULL);
+        SDL_RenderCopy(renderer, menuImgTexture, NULL, &menu);
+        showMenu(renderer, menuTextureArray, menuRectArray,&cursor);
       }
-      if (cursor == 2) {
-        SDL_RenderCopy(renderer, onlineSelectTexture, NULL, &online);
-      } else {
-        SDL_RenderCopy(renderer, onlineNoSelectTexture, NULL, &onlineNo);
-      }
-      if (cursor == 3) {
-        SDL_RenderCopy(renderer, optionSelectTexture, NULL, &option);
-      } else {
-        SDL_RenderCopy(renderer, optionNoSelectTexture, NULL, &optionNo);
-      }
-
-      if (cursor == 4) {
-        SDL_RenderCopy(renderer, editorSelectTexture, NULL, &editor);
-      } else {
-        SDL_RenderCopy(renderer, editorNoSelectTexture, NULL, &editorNo);
-      }
-
-      if (cursor == 5) {
-        SDL_RenderCopy(renderer, quitSelectTexture, NULL, &quit);
-      } else {
-         SDL_RenderCopy(renderer, quitNoSelectTexture, NULL, &quitNo);
-      }
-
       SDL_RenderPresent(renderer);
       SDL_Delay(1000/60);
   }
@@ -308,23 +215,10 @@ int main(int argc, char ** argv) {
     SDL_Quit();*/
 
 
-SDL_DestroyTexture(menuImgTexture);
-SDL_DestroyTexture(backgroundTexture);
-
-SDL_DestroyTexture(jvjSelectTexture);
-SDL_DestroyTexture(onlineSelectTexture);
-SDL_DestroyTexture(optionSelectTexture);
-SDL_DestroyTexture(editorSelectTexture);
-SDL_DestroyTexture(quitSelectTexture);
-
-SDL_DestroyTexture(jvjNoSelectTexture);
-SDL_DestroyTexture(onlineNoSelectTexture);
-SDL_DestroyTexture(optionNoSelectTexture);
-SDL_DestroyTexture(editorNoSelectTexture);
-SDL_DestroyTexture(quitNoSelectTexture);
-
-SDL_DestroyRenderer(renderer);
-SDL_DestroyWindow(win);
-SDL_Quit();
-    return EXIT_SUCCESS;
+  SDL_DestroyTexture(menuImgTexture);
+  SDL_DestroyTexture(backgroundTexture);
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(win);
+  SDL_Quit();
+  return EXIT_SUCCESS;
 }

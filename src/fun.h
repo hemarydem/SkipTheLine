@@ -7,13 +7,9 @@
 #include<stdio.h>
 #include<stdbool.h>
 #endif
-//build
+
+
 SDL_Texture * buildTextur(const char * imgPath, SDL_Renderer * renderer, SDL_Texture *texture);
-
-char * buildStr(int size);
-
-//init
-SDL_Rect initPositionAndSize(SDL_Rect * rectContaineur, int * ladder, int * y, int * x);
 
 //check
 int freeAndQuitIfNull(int compare,const char * strErroMsg,SDL_Window * win, SDL_Renderer * renderer, SDL_Texture * tex);
@@ -22,3 +18,9 @@ int freeAndQuitIfNull(int compare,const char * strErroMsg,SDL_Window * win, SDL_
 void dontCrosseBorder(float * velocity, float * position);
 
 void dontCrosseBottomBorder(int HeightORwidht,int spriteHorW,float * velocity, float * position);
+
+//build a string
+char * buildStr(int size);
+
+//divide by lader the size of the rec in arg position it by x and y must us SDL_QueryTexture before use it
+SDL_Rect initPositionAndSize(SDL_Rect * rectContaineur, int * ladder, int * y, int * x);
