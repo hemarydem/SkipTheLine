@@ -7,8 +7,6 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<string.h>
-
-
 // création of variables
 SDL_Texture  *** initMenuArray() {
   SDL_Texture *** array;
@@ -27,8 +25,7 @@ SDL_Texture  *** initMenuArray() {
           printf("error malloc\n initMenuArray\n");
           return array;
         }
-
-  }
+    }
     return array;
   }
   printf("\n initMenuTextureArray \n");
@@ -140,7 +137,7 @@ void showMenu(SDL_Renderer * renderer, SDL_Texture *** arrayT, SDL_Rect ** array
   if (*cursor == 4) {
     SDL_RenderCopy(renderer, *arrayT[6], NULL, arrayRect[6]);
   } else {
-  SDL_RenderCopy(renderer, *arrayT[7], NULL, arrayRect[7]);
+    SDL_RenderCopy(renderer, *arrayT[7], NULL, arrayRect[7]);
   }
   if (*cursor == 5) {
     SDL_RenderCopy(renderer, *arrayT[8], NULL, arrayRect[8]);

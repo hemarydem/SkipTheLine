@@ -1,2 +1,10 @@
 commande pour compiler sur mac :
 gcc src/*.c -o bin/skipeTheLine.app $(sdl2-config --cflags --libs) -lSDL2_image -lSDL2_ttf
+
+
+penser à faire des traitement pour liberer la mémoir pour
+les textures du menu
+les rect du menu
+
+prochaine étape
+le gamplay

@@ -213,8 +213,12 @@ int main(int argc, char ** argv) {
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(win);
     SDL_Quit();*/
-
-
+  for (int i = 0; i < 10; i++)
+    free(menuRectArray[i]);
+  free(menuRectArray);
+  for (int i = 0; i < 10; i++)
+    SDL_DestroyTexture(*menuTextureArray[i]);
+  free(menuTextureArray);
   SDL_DestroyTexture(menuImgTexture);
   SDL_DestroyTexture(backgroundTexture);
   SDL_DestroyRenderer(renderer);
