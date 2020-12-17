@@ -11,12 +11,16 @@
 #include<SDL_ttf.h>
 #include "fun.h"
 #include "menufun.h"
+#include "mapSelectionFun.h"
+#include "jvjFun.h"
+#include "writeFun.h"
 #define WINDOW_WIDTH (620)
 #define WINDOW_HEIGHT (440)
 #define SPEED (300)
 #define MARIOSPEED (150)
 
 int main(int argc, char ** argv) {
+
   SDL_Window * win = NULL;
   SDL_Renderer * renderer = NULL;
   int close = 0;
@@ -46,6 +50,12 @@ int main(int argc, char ** argv) {
       printf("error initialisation");
       return EXIT_FAILURE;
   }
+
+  if (TTF_Init() != 0){
+	printf("TTF_Init error\n");
+	SDL_Quit();
+	return 1;
+}
   win  = SDL_CreateWindow("Skip the Line",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WINDOW_WIDTH, WINDOW_HEIGHT,0);
   freeAndQuitIfNull(win == NULL,"creation window" ,win, renderer,backgroundTexture);
   renderer = SDL_CreateRenderer(win, -1,SDL_RENDERER_ACCELERATED);
@@ -55,7 +65,8 @@ int main(int argc, char ** argv) {
   menuImgTexture = buildTextur("img/menuImg/selected/menu.png", renderer, menuImgTexture);
   freeAndQuitIfNull(menuImgTexture == NULL,"error creation texture" ,win, renderer,menuImgTexture);
 
-  menuTextureArray = getTextureMenuArray(menuTextureArray,renderer);
+  //menuTextureArray = getTextureMenuArray(menuTextureArray,renderer);
+  menuTextureArray = getTextureMenuArrayByttf(menuTextureArray,  renderer);
   SDL_QueryTexture(menuImgTexture,NULL,NULL, &menu.w, &menu.h);
   int centered = (WINDOW_HEIGHT - menu.h) / 2;
   int gapBetweenLabel = 65;

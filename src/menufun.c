@@ -7,7 +7,7 @@
 #include<stdio.h>
 #include<stdbool.h>
 #include<string.h>
-// création of variables
+// création of variables perror voir errno variabel qui revoir l'Error -> revoit un text dans la console
 SDL_Texture  *** initMenuArray() {
   SDL_Texture *** array;
   int i;
