@@ -7,6 +7,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<stdbool.h>
+#include <string.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
 #include "fun.h"
@@ -20,9 +21,12 @@
 #define MARIOSPEED (150)
 
 int main(int argc, char ** argv) {
-    getMapList("src/maps/mapNamLib.txt");
-
-
+    char ** maps = getMapList("src/maps/mapNamLib.txt");
+    int i=0;
+    while (i<3){
+        printf("\nmain %s\n",maps[i]);
+        i++;
+    }
     return 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    init var zone       ////////////////////////////////////////////////////////////////////////////////////////////////////
