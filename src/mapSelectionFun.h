@@ -12,3 +12,4 @@
 #endif
 
 int getMapList(const char* fileName);
+long getSize(const char * filename);
