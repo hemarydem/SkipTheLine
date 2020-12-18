@@ -7,7 +7,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<stdbool.h>
-#include <string.h>
+#include<string.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
 #include "fun.h"
@@ -15,6 +15,7 @@
 #include "mapSelectionFun.h"
 #include "jvjFun.h"
 #include "writeFun.h"
+#include "mapNod.h"
 #define WINDOW_WIDTH (620)
 #define WINDOW_HEIGHT (440)
 #define SPEED (300)
