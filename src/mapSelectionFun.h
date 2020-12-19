@@ -7,12 +7,11 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include<SDL_ttf.h>
+#include <SDL_ttf.h>
 #include "fun.h"
 #include "menufun.h"
-#include "mapSelectionFun.h"
-#include "writeFun.h"
-#endif
+
+int numOfMapsForMainFile(const char * filename);
 
 int numOfMaps(char* str);
 
@@ -23,3 +22,4 @@ char ** buildArrayMaplist(char * str,int numOfLine);
 char ** joinMapListandDataList(char ** mapsList, char * fileData, int numOfMaps);
 
 char ** getMapList(const char* fileName);
+#endif

@@ -1,28 +1,24 @@
 #ifndef mapNod_h
 #define mapNod_h
-#include <SDL.h>
-#include <SDL_image.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
-#include<SDL_ttf.h>
-#include "fun.h"
-#include "menufun.h"
-#include "mapSelectionFun.h"
-#include "writeFun.h"
-#endif
-
-
-typedef struct  mape mape;
-struct mape{
+#include <SDL.h>
+struct map {
     char name[100];
-    mape * next;
-    mape * last;
+    struct map * next;
+    struct map * last;
+    SDL_Texture * selcetedBlue;
+    SDL_Texture * unselcetedGreen;
 };
-
-map * creatMapeNode(char * mapName);
-map * addMapeNode(mape * newMape, mape * firstNodeMape);
-int suppMapeNode(mape * newMape, char * nameMapeToSupp,mape * firstNodeMape);
-int freeALLNodeMap(mape * firstNodeMape);
+typedef struct map map;
+struct firstMapNode{
+  struct  map *firstMap;
+};
+typedef struct  firstMapNode firstMapNode;
+firstMapNode * creatMapeNode(char * mapName);
+#endif
+/*map * addMapNode(map * newMap, map * firstNodeMap);
+int suppMapNode(map * newMap, char * nameMapToSupp,map * firstNodeMap);
+int freeALLNodeMap(map * firstNodeMap);
+void initNodeMaps(char** maps, map * firstNodeMap);*/

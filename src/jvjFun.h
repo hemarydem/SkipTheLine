@@ -8,7 +8,7 @@
 #include <stdbool.h>
 #include "fun.h"
 #include "menufun.h"
-#endif
+
 
 SDL_Texture  *** initJvjArray();
 
@@ -17,3 +17,4 @@ char ** getJvjmagePath();
 SDL_Texture  *** getTextureJvJArray(SDL_Texture *** arrayT,  SDL_Renderer * renderer);
 
 SDL_Rect  ** initJvjRectArray();
+#endif

@@ -1,11 +1,5 @@
 #include "fun.h"
-#include <SDL.h>
-#include<SDL_image.h>
-#include<stdint.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<stdbool.h>
-#include<string.h>
+
 
 SDL_Texture * buildTextur(const char * imgPath, SDL_Renderer * renderer, SDL_Texture *texture){
     SDL_Surface * surface;

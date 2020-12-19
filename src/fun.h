@@ -6,7 +6,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 #include<stdbool.h>
-#endif
+#include<string.h>
 
 
 SDL_Texture * buildTextur(const char * imgPath, SDL_Renderer * renderer, SDL_Texture *texture);
@@ -24,3 +24,4 @@ char * buildStr(int size);
 
 //divide by lader the size of the rec in arg position it by x and y must us SDL_QueryTexture before use it
 SDL_Rect initPositionAndSize(SDL_Rect * rectContaineur, int * ladder, int * y, int * x);
+#endif

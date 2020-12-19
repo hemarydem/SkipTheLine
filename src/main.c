@@ -10,37 +10,28 @@
 #include<string.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
+#include "mapNod.h"
 #include "fun.h"
 #include "menufun.h"
 #include "mapSelectionFun.h"
-#include "jvjFun.h"
 #include "writeFun.h"
-#include "mapNod.h"
+
 #define WINDOW_WIDTH (620)
 #define WINDOW_HEIGHT (440)
 #define SPEED (300)
 #define MARIOSPEED (150)
 
 int main(int argc, char ** argv) {
-    char ** maps = getMapList("src/maps/mapNamLib.txt");
-    int i=0;
-    while (i<3){
-        printf("\nmain %s\n",maps[i]);
-        i++;
-    }
-    return 0;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    init var zone       ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-  SDL_Window * win = NULL;
-  SDL_Renderer * renderer = NULL;
-  int close = 0;
-  int cursor = 1;
-
-  bool selecting = false;
-  bool menuIsOn = true;
-  bool gameIsOn = false;
-  bool menuOption[6] = {
+    SDL_Window * win = NULL;
+    SDL_Renderer * renderer = NULL;
+    int close = 0;
+    int cursor = 1;
+    bool selecting = false;
+    bool menuIsOn = true;
+    bool gameIsOn = false;
+    bool menuOption[6] = {
     true,       //menu 
     false,      //jvj
     false,      //online
@@ -48,22 +39,22 @@ int main(int argc, char ** argv) {
     false,      //option
     false       //quit
     };
-  //menu
-  SDL_Texture * menuImgTexture;
-  SDL_Texture * backgroundTexture;
-  SDL_Texture *** menuTextureArray;
-  menuTextureArray = initMenuArray();
-  //jvj
-  SDL_Texture * pikaTex;
-  SDL_Texture*arenaTex;
-  SDL_Texture*marioTex;
+    //menu
+    SDL_Texture * menuImgTexture;
+    SDL_Texture * backgroundTexture;
+    SDL_Texture *** menuTextureArray;
+    menuTextureArray = initMenuArray();
+    //jvj
+    SDL_Texture * pikaTex;
+    SDL_Texture*arenaTex;
+    SDL_Texture*marioTex;
 
-  SDL_Rect ** menuRectArray = initMenuRectArray();
-  SDL_Rect menu;
+    SDL_Rect ** menuRectArray = initMenuRectArray();
+    SDL_Rect menu;
 
-  //jvj rect
-  SDL_Rect pikachu;
-  SDL_Rect mario;
+    //jvj rect
+    SDL_Rect pikachu;
+    SDL_Rect mario;
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    init library     ////////////////////////////////////////////////////////////////////////////////////////////////////
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER) != 0){
@@ -76,6 +67,12 @@ int main(int argc, char ** argv) {
         SDL_Quit();
         return 1;
     }
+
+    char ** maps = getMapList("src/maps/mapNamLib.txt");
+    int mapsNum = numOfMapsForMainFile("src/maps/mapNamLib.txt");
+    printf("\nNombre de map dans le main %d\n", mapsNum);
+    firstMapNode * firstNodeMape;
+    firstNodeMape = creatMapeNode("cartePareDefault");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    creat window and the renderer    ////////////////////////////////////////////////////////////////////////////////////////////////////
     win  = SDL_CreateWindow("Skip the Line",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WINDOW_WIDTH, WINDOW_HEIGHT,0);

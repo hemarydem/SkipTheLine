@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "fun.h"
-#endif
+
 
 // return an SDL_Texture  ** array
 SDL_Texture  *** initMenuArray();
@@ -21,3 +21,4 @@ SDL_Rect  ** initMenuRectArray();
 void menuJoinTextureAndRect(SDL_Texture *** arrayT, SDL_Rect ** array, int *xPositionMenu, int *yStartingPositionMenu  ,int *gapBetweenLabel,int *ladderDimenssion);
 
 void showMenu(SDL_Renderer * renderer, SDL_Texture *** arrayT, SDL_Rect **  arrayRect, int * cursor);
+#endif

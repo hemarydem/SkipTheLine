@@ -1,13 +1,5 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include<SDL_ttf.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include "fun.h"
-#include "menufun.h"
 #include "writeFun.h"
+
 
 SDL_Texture * renderText(const char * message, const char* fontFile, SDL_Color color, int fontSize, SDL_Renderer *renderer) {
 	//Open the font
@@ -86,7 +78,7 @@ SDL_Texture  *** getTextureMenuArrayByttf(SDL_Texture *** arrayT,  SDL_Renderer 
   	int i;
   	char ** arrayTexturePath = getMenuWords();
   	for (i = 0; i < 10; i+=2) {
-		*arrayT[i] = renderText(arrayTexturePath[i],"font/gameria/gameria/GAMERIA.ttf", blue,100,renderer);
+		*arrayT[i] = renderText(arrayTexturePath[i],"font/gameria/gameria/GAMERIA.ttf", blue,100,renderer);//
 		if( arrayT[i] == NULL) printf(" error\n image -> %s", arrayTexturePath[i]);
 		*arrayT[i + 1] = renderText(arrayTexturePath[i],"font/gameria/gameria/GAMERIA.ttf", green,100,renderer);
 		if( arrayT[i + i] == NULL) printf(" error\n image -> %s", arrayTexturePath[i + 1]);
@@ -95,4 +87,19 @@ SDL_Texture  *** getTextureMenuArrayByttf(SDL_Texture *** arrayT,  SDL_Renderer 
 		free(arrayTexturePath[i]);
 	free(arrayTexturePath);
 	return arrayT;
+}
+///////   for maps selection menu ///////
+
+void setTextureMapMenuTitleByttf(firstMapNode * fNodeMap,  SDL_Renderer * renderer) {
+	SDL_Color green = { 0, 200, 0,SDL_ALPHA_OPAQUE};
+	SDL_Color blue = {0, 50, 150,SDL_ALPHA_OPAQUE};
+	map * ptr = fNodeMap->firstMap;
+	while (1) {
+		ptr->selcetedBlue = renderText(ptr->name,"font/gameria/gameria/GAMERIA.ttf", blue,100,renderer);
+		if( ptr->selcetedBlue == NULL) printf(" error\n map -> %s", ptr->name);
+		ptr->unselcetedGreen = renderText(ptr->name,"font/gameria/gameria/GAMERIA.ttf", green,100,renderer);
+		if( ptr->unselcetedGreen == NULL) printf(" error\n map -> %s", ptr->name);
+		if (ptr->next == NULL) break;
+		ptr = ptr->next;
+	}
 }

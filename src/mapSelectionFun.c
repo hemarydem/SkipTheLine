@@ -1,15 +1,28 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <stdint.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
-#include<SDL_ttf.h>
-#include "fun.h"
-#include "menufun.h"
+
 #include "mapSelectionFun.h"
-#include "writeFun.h"
+
+
+int numOfMapsForMainFile(const char * fileName) {
+  FILE *fp;
+  long size = getSize(fileName);
+  int count = 0;
+  int sFfg = (int) size;
+  int i = 0;
+  char * fileData;
+  if (fp == NULL) {
+    perror("Error opening the file.\n");
+  }
+  fp = fopen(fileName, "rb"); // read mode
+  fileData = malloc(sizeof(char) * sFfg);
+  fread(fileData, sizeof(char), sFfg, fp);
+  while(i < strlen(fileData)) {
+    printf("%c", fileData[i]);
+    if(fileData[i] == '|') count++;
+    i++;
+  }
+  fclose(fp);
+  return count;
+}
 
 int numOfMaps(char* str) {
   int count;
@@ -50,22 +63,22 @@ char ** buildArrayMaplist(char * str,int numOfLine) {
           j++;
         }
         free(array);
-        printf("error malloc\n etMenuImagePath\n");
+        printf("error malloc\n buildArrayMaplist\n");
         return array= NULL;
       }
     }
     return array;
   }
-  printf("\n error \n getMenuImagePath \n");
+  printf("\n error \n 2  buildArrayMaplist \n");
   return array = NULL;
 }
 char ** joinMapListandDataList(char ** mapsList, char * fileData, int numOfMaps) {
- int i = 0;
- char returnChar = '\0';
- char *sPtr = fileData;//start ptr
- char *ePtr = fileData;//end ptr
+  int i = 0;
+  char returnChar = '\0';
+  char *sPtr = fileData;//start ptr
+  char *ePtr = fileData;//end ptr
   while (i < numOfMaps) {
-   while (*ePtr != '|')
+    while (*ePtr != '|')
       ePtr++;
     *ePtr = returnChar;
     printf("sPtr = %s", sPtr);
@@ -76,7 +89,6 @@ char ** joinMapListandDataList(char ** mapsList, char * fileData, int numOfMaps)
   }
   return mapsList;
 }
-
 
 char ** getMapList(const char* fileName) {
   char * fileData;// takke data from file
