@@ -1,12 +1,4 @@
 #include "menufun.h"
-#include "fun.h"
-#include <SDL.h>
-#include<SDL_image.h>
-#include<stdint.h>
-#include<stdlib.h>
-#include<stdio.h>
-#include<stdbool.h>
-#include<string.h>
 // création of variables perror voir errno variabel qui revoir l'Error -> revoit un text dans la console
 SDL_Texture  *** initMenuArray() {
   SDL_Texture *** array;

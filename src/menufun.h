@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "fun.h"
+#include<string.h>
 
 
 // return an SDL_Texture  ** array
