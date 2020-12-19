@@ -6,7 +6,7 @@
 #include<stdint.h>
 #include<stdlib.h>
 #include<stdio.h>
-#include<stdbool.h>
+#include<stdint.h>
 #include<string.h>
 #include<SDL_image.h>
 #include<SDL_ttf.h>
@@ -28,16 +28,16 @@ int main(int argc, char ** argv) {
     SDL_Renderer * renderer = NULL;
     int close = 0;
     int cursor = 1;
-    bool selecting = false;
-    bool menuIsOn = true;
-    bool gameIsOn = false;
-    bool menuOption[6] = {
-    true,       //menu 
-    false,      //jvj
-    false,      //online
-    false,      //editor
-    false,      //option
-    false       //quit
+    int selecting = 0;
+    int menuIsOn = 1;
+    int gameIsOn = 0;
+    int menuOption[6] = {
+    1,       //menu 
+    0,      //jvj
+    0,      //online
+    0,      //editor
+    0,      //option
+    0       //quit
     };
     //menu
     SDL_Texture * menuImgTexture;
@@ -139,8 +139,8 @@ int main(int argc, char ** argv) {
                             printf("entrer\n");
                             if (cursor == 6) cursor = 1;
                             if (cursor == 0) cursor = 5;
-                            menuOption[cursor]= true;
-                            menuOption[0]= false;
+                            menuOption[cursor]= 1;
+                            menuOption[0]= 0;
                         break;
 
                         case SDLK_DOWN:

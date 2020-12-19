@@ -6,7 +6,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include "fun.h"
 #include "menufun.h"
 #include "mapNod.h"

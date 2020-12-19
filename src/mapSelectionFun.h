@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h>
 #include <SDL_ttf.h>
 #include "fun.h"
 #include "menufun.h"
