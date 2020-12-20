@@ -1,85 +1,29 @@
 
 #include "mapNod.h"
 
-
-
-firstMapNode * creatMapeNode(char * mapName) {
-    printf("\ncreatMapeNode is running\n");
-    firstMapNode  * fmNode = malloc(sizeof(firstMapNode*));
-    map * m = malloc(sizeof(map*));
-    if(m == NULL || fmNode == NULL) {
-        exit(EXIT_FAILURE);
-    }
+firstMapNode * initListMap(firstMapNode * list, char * defaultMap) {
+    map * m;
+    m = malloc(sizeof(m));
+    list->firstMap = m;
+    m->name = malloc(sizeof(char) * 100);
     m->next = NULL;
     m->last = NULL;
-    strcpy(m->name,mapName);
-    return fmNode;
-}
-/*
-map * addMapeNode(map * newMap, map * firstNodeMap) {// muste the firstNodeMape in param
-    printf("\naddMapNode is running\n");
-    bool i = true;
-    map * ptr;
-    ptr = firstNodeMap;
-    while (i) {
-        if (ptr->next == NULL) {
-            ptr->next = newMap;
-            i = false;
-        } else {
-            ptr = ptr->next;
-        }
-    }
-    return newMap;
+    strcpy(m->name, defaultMap);
+    return list;
 }
 
-int suppMapNode(map * newMap, char * nameMapToSupp,map * firstNodeMap) {// muste the firstNodeMape in param
-    printf("\nsuppMapNode is running\n");
-    bool i = true;
+firstMapNode * addMap(firstMapNode * list, char * mapName) {
+    map * m;
     map * ptr;
-    map * SafePtr;
-    ptr = firstNodeMap;
-    SafePtr = firstNodeMap;
-    while (i) {
-        if (strcmp(ptr->name, nameMapToSupp) == 0) {
-            ptr->last->next = ptr->next;//the node last ptr take in his next next of ptr
-            ptr->next->last = ptr->last;//the node next ptr take in his last last of ptr
-            free(ptr);
-            i = false;
-        } else {
-            ptr = ptr->next;
-        }
+    int i = 1;
+    m = malloc(sizeof(m));
+    m->name = malloc(sizeof(char) * 100);
+    strcpy(m->name, mapName);
+    ptr = list->firstMap;
+    while (ptr->next != NULL) {
+        ptr->next = ptr->next;
+        printf("\nhello\n");
     }
-    return 1;
+    ptr->next = m;
+    return list;
 }
-
-int freeALLNodeMap(map * firstNodeMap) {// muste the firstNodeMape in param
-    bool i = true;
-    map * ptr;
-    ptr = firstNodeMap;
-    while (i) {
-        if (ptr->next == NULL) {
-            free(ptr);
-            i = false;
-        } else {
-            ptr = ptr->next;
-            free(ptr->last);
-        }
-    }
-    return 1;
-}
-
-void initNodeMaps(char** maps, map * firstNodeMap) {
-    int i = 0;
-    map * ptr;
-    ptr = firstNodeMap;
-    while (i) {
-        if (ptr->next == NULL) {
-            strcpy(ptr->name,maps[i]);
-            break;
-        } else {
-            strcpy(ptr->name,maps[i]);
-            ptr = ptr->next;
-        }
-        i++;
-    }
-}*/

@@ -39,6 +39,7 @@ int main(int argc, char ** argv) {
     0,      //option
     0       //quit
     };
+    printf("ok numbur 1\n");
     //menu
     SDL_Texture * menuImgTexture;
     SDL_Texture * backgroundTexture;
@@ -67,18 +68,26 @@ int main(int argc, char ** argv) {
         SDL_Quit();
         return 1;
     }
-
+    printf("ok numbur 2\n");
     char ** maps = getMapList("src/maps/mapNamLib.txt");
     int mapsNum = numOfMapsForMainFile("src/maps/mapNamLib.txt");
     printf("\nNombre de map dans le main %d\n", mapsNum);
-    firstMapNode * firstNodeMape;
-    firstNodeMape = creatMapeNode("cartePareDefault");
+    firstMapNode * list;
+     list = initListMap(list, "cartePareDefault");
+     printf( "\n%s\n",maps[1]);
+     list = addMap(list, maps[1]);
+    //frstNodeMap = initMapeNodeQ(mapsNum, frstNodeMap);
+    printf("\nbefore initNodeMapAndCharNameMaps\n");
+    //frstNodeMap = initNodeMapAndCharNameMaps(maps, frstNodeMap);
+    printf("ok numbur 2.5\n");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    creat window and the renderer    ////////////////////////////////////////////////////////////////////////////////////////////////////
     win  = SDL_CreateWindow("Skip the Line",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WINDOW_WIDTH, WINDOW_HEIGHT,0);
     freeAndQuitIfNull(win == NULL,"creation window" ,win, renderer,backgroundTexture);
+    printf("ok numbur 2.7\n");
     renderer = SDL_CreateRenderer(win, -1,SDL_RENDERER_ACCELERATED);
     freeAndQuitIfNull(renderer == NULL,"creation renderer" ,win, renderer,backgroundTexture);
+    printf("ok numbur 3\n");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    menu builn join  textur and rect set position and size   ////////////////////////////////////////////////////////////////////////////////////////////////////
     backgroundTexture = buildTextur("img/menuImg/bckgrndMenu.jpg", renderer, backgroundTexture);
@@ -95,6 +104,7 @@ int main(int argc, char ** argv) {
     initPositionAndSize(&menu ,&ladderDimenssion,&y_label,&centered);
     y_label += gapBetweenLabel;
     menuJoinTextureAndRect(menuTextureArray, menuRectArray,&centered,&y_label,&gapBetweenLabel,&ladderDimenssion);
+    printf("ok numbur 4\n");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    menu builn join  textur and rect set position and size   ////////////////////////////////////////////////////////////////////////////////////////////////////
     pikaTex = buildTextur("img/pikachuTest.jpg", renderer, pikaTex);
@@ -112,6 +122,7 @@ int main(int argc, char ** argv) {
     pikachu.w /= 4;
     mario.h /= 4;
     mario.w /= 4;
+    printf("ok numbur 5\n");
     //faire une fonction pour gerer la postion de départ
     float y_pos = (WINDOW_HEIGHT - pikachu.h) / 2;
     float x_pos = (WINDOW_WIDTH - pikachu.w) / 2;
@@ -124,9 +135,11 @@ int main(int argc, char ** argv) {
     //int close = 0;
     int marioLastXY[2] = {mario_x_pos ,mario_yVel};
     int pikachuLastXY[2] = {x_pos ,y_pos};
+    printf("ok numbur 6\n");
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    Animation LOOP   ////////////////////////////////////////////////////////////////////////////////////////////////////
     while (!close) {
+        printf("ok numbur A\n");
         SDL_Event event;
         while (SDL_PollEvent(&event) == 1) {
             if(event.type == SDL_QUIT) {
@@ -190,6 +203,7 @@ int main(int argc, char ** argv) {
                 break;
             }
         }
+        printf("ok numbur B\n");
         if (cursor == 6) cursor = 1;
         if (cursor == 0) cursor = 5;
         SDL_RenderClear(renderer);
@@ -198,6 +212,7 @@ int main(int argc, char ** argv) {
         SDL_RenderCopy(renderer, menuImgTexture, NULL, &menu);
         showMenu(renderer, menuTextureArray, menuRectArray,&cursor);
         }
+        printf("ok numbur c\n");
         if(menuOption[1]) {
                 //manage colistion pikachu
             dontCrosseBorder(&xVel, &x_pos);
