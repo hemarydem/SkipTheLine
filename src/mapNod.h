@@ -17,7 +17,10 @@ struct firstMapNode {
 };
 typedef struct  firstMapNode firstMapNode;
 
-firstMapNode * initListMap(firstMapNode * list, char * defaultMap);
+firstMapNode * initList(firstMapNode * list, char * defaultMap);
 firstMapNode * addMap(firstMapNode * list, char * mapName);
-
+firstMapNode * supMap(firstMapNode * list, char * mapName);
+firstMapNode * showMapList(firstMapNode * list);
+map * getLastMapNode(firstMapNode * list);
+firstMapNode * initMapListName(char ** mapList,  int mapsNum,firstMapNode * list);
 #endif

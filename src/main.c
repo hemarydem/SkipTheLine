@@ -62,24 +62,17 @@ int main(int argc, char ** argv) {
         printf("error initialisation");
         return EXIT_FAILURE;
     }
-
     if (TTF_Init() != 0){
         printf("TTF_Init error\n");
         SDL_Quit();
         return 1;
     }
-    printf("ok numbur 2\n");
     char ** maps = getMapList("src/maps/mapNamLib.txt");
     int mapsNum = numOfMapsForMainFile("src/maps/mapNamLib.txt");
-    printf("\nNombre de map dans le main %d\n", mapsNum);
     firstMapNode * list;
-     list = initListMap(list, "cartePareDefault");
-     printf( "\n%s\n",maps[1]);
-     list = addMap(list, maps[1]);
-    //frstNodeMap = initMapeNodeQ(mapsNum, frstNodeMap);
-    printf("\nbefore initNodeMapAndCharNameMaps\n");
-    //frstNodeMap = initNodeMapAndCharNameMaps(maps, frstNodeMap);
-    printf("ok numbur 2.5\n");
+    list = initList(list, "cartePareDefault");
+    list = initMapListName(maps,mapsNum,list);
+    list = showMapList(list);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////    creat window and the renderer    ////////////////////////////////////////////////////////////////////////////////////////////////////
     win  = SDL_CreateWindow("Skip the Line",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,WINDOW_WIDTH, WINDOW_HEIGHT,0);
